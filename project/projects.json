@@ -1,0 +1,26 @@
+[
+    {
+        "id": "e-commerce",
+        "title": "E-Commerce Platform",
+        "description": "A full-stack e-commerce application featuring user registration, shopping cart functionality, secure payment integration, and a dedicated admin interface.",
+        "tech": ["Laravel", "ReactJS", "MySQL"],
+        "folder": "E-Commerce-Platform",
+        "image": "project/E-Commerce-Platform/cover.jpg"
+    },
+    {
+        "id": "stock-management",
+        "title": "Stock Management System",
+        "description": "A comprehensive system allowing users to visualize, track, and manage stock levels and product movements in real time.",
+        "tech": ["PHP", "JavaScript", "Bootstrap"],
+        "folder": "Stock-Management-System",
+        "image": "project/Stock-Management-System/cover.jpg"
+    },
+    {
+        "id": "library-app",
+        "title": "Library Management App",
+        "description": "A web application developed for AUI to manage library resources, including a real-time MySQL database for book tracking.",
+        "tech": ["PHP", "HTML/CSS", "MySQL"],
+        "folder": "Library-Management-App",
+        "image": "project/Library-Management-App/cover.jpg"
+    }
+]
