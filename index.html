@@ -183,30 +183,38 @@
             <div class="section-header reveal">
                 <h2>Featured <span>Projects</span></h2>
             </div>
-            <div id="projects-container" class="projects-grid reveal">
-                <!-- Project cards will be dynamically injected here by JS -->
+            <div class="projects-slider-wrapper reveal">
+                <div id="projects-container" class="projects-grid">
+                    <!-- Project cards will be dynamically injected here by JS -->
+                </div>
+                <div class="slider-controls">
+                    <button id="slider-prev" class="slider-btn">&larr;</button>
+                    <button id="slider-next" class="slider-btn">&rarr;</button>
+                </div>
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="contact section">
-            <div class="section-header reveal">
-                <h2>Get In <span>Touch</span></h2>
+            <div class="section-header reveal text-center">
+                <h2>Let's <span>Talk</span></h2>
+                <p class="contact-subtitle">Have a project in mind? Let's build something amazing together.</p>
             </div>
-            <div class="contact-container reveal glass-panel">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <span class="icon">📧</span>
-                        <a href="mailto:grouateyoussef0@gmail.com">grouateyoussef0@gmail.com</a>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon">📱</span>
-                        <a href="tel:+212678420419">+212 678420419</a>
-                    </div>
-                    <div class="contact-item">
-                        <span class="icon">📍</span>
-                        <span>Morocco, Ifrane, Azrou</span>
-                    </div>
+            <div class="contact-grid reveal-stagger">
+                <a href="mailto:grouateyoussef0@gmail.com" class="contact-card">
+                    <div class="contact-icon">📧</div>
+                    <h3>Email</h3>
+                    <p>grouateyoussef0@gmail.com</p>
+                </a>
+                <a href="tel:+212678420419" class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <h3>Phone</h3>
+                    <p>+212 678 420 419</p>
+                </a>
+                <div class="contact-card">
+                    <div class="contact-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>Morocco, Ifrane, Azrou</p>
                 </div>
             </div>
         </section>

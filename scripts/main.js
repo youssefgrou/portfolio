@@ -191,20 +191,44 @@ document.addEventListener('DOMContentLoaded', () => {
             const techSpans = project.tech.map(t => `<span>${t}</span>`).join('');
             const cardHTML = `
                 <div class="project-card" data-index="${index}">
-                    <img src="${project.cover}" alt="${project.title}" class="project-cover">
-                    <div class="project-overlay">
-                        <div class="project-content">
-                            <h3>${project.title}</h3>
-                            <p>${project.description}</p>
-                            <div class="project-tech">
-                                ${techSpans}
-                            </div>
+                    <div class="project-image-container">
+                        <img src="${project.cover}" alt="${project.title}" class="project-cover">
+                    </div>
+                    <div class="project-content">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                        <div class="project-tech">
+                            ${techSpans}
                         </div>
                     </div>
                 </div>
             `;
             projectsContainer.insertAdjacentHTML('beforeend', cardHTML);
         });
+
+        // --- Projects Slider Logic ---
+        const sliderPrev = document.getElementById('slider-prev');
+        const sliderNext = document.getElementById('slider-next');
+
+        if (sliderPrev && sliderNext) {
+            sliderPrev.addEventListener('click', () => {
+                const card = projectsContainer.querySelector('.project-card');
+                if(card) {
+                    const cardWidth = card.offsetWidth;
+                    const gap = parseFloat(getComputedStyle(projectsContainer).gap) || 32;
+                    projectsContainer.scrollBy({ left: -(cardWidth + gap), behavior: 'smooth' });
+                }
+            });
+
+            sliderNext.addEventListener('click', () => {
+                const card = projectsContainer.querySelector('.project-card');
+                if(card) {
+                    const cardWidth = card.offsetWidth;
+                    const gap = parseFloat(getComputedStyle(projectsContainer).gap) || 32;
+                    projectsContainer.scrollBy({ left: (cardWidth + gap), behavior: 'smooth' });
+                }
+            });
+        }
     }
 
     // --- Modal Logic ---
