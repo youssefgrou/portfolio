@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 const ProjectModal = ({ project, onClose }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -7,7 +8,7 @@ const ProjectModal = ({ project, onClose }) => {
     // Handle keydown
     useEffect(() => {
         if (!project) return;
-        
+
         const nextImage = () => {
             setImageOpacity(0);
             setTimeout(() => {
@@ -54,22 +55,49 @@ const ProjectModal = ({ project, onClose }) => {
         }, 150);
     };
 
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        if (!touchStartX.current) return;
+        const touchEndX = e.touches[0].clientX;
+        const diff = touchStartX.current - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) nextImageClick();
+            else prevImageClick();
+            touchStartX.current = 0;
+        }
+    };
+
+    const handleTouchEnd = () => {
+        touchStartX.current = 0;
+    };
+
     const handleOverlayClick = (e) => {
         if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-gallery')) {
             onClose();
         }
     };
 
-    return (
+    return createPortal(
         <div className={`modal-overlay ${project ? 'active' : ''}`} onClick={handleOverlayClick}>
             <div className="modal-content">
                 <button className="modal-close" onClick={onClose}>&times;</button>
-                <div className="modal-gallery">
+                <div 
+                    className="modal-gallery"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                    style={{ touchAction: 'pan-y' }}
+                >
                     <img
                         className="modal-image"
                         src={'/' + project.images[currentImageIndex]}
                         alt={project.title}
                         style={{ opacity: imageOpacity }}
+                        draggable="false"
                     />
                     <div className="modal-controls">
                         <button className="modal-btn" onClick={prevImageClick}>&larr;</button>
@@ -87,7 +115,8 @@ const ProjectModal = ({ project, onClose }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

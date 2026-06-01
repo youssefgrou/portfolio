@@ -9,6 +9,7 @@
     --accent-purple: #7b2cbf;
     --accent-blue: #00f0ff;
     --accent-cyan: #00ffc4;
+    --accent-primary: #00ffc4;
     
     --glass-bg: rgba(255, 255, 255, 0.02);
     --glass-border: rgba(255, 255, 255, 0.05);
@@ -19,6 +20,18 @@
     
     /* Transitions */
     --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: var(--transition-smooth);
 }
 
 * {
@@ -37,8 +50,23 @@ body {
     font-family: var(--font-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    cursor: none;
     -webkit-font-smoothing: antialiased;
+}
+
+/* Conditionally apply custom cursor only on hover-capable devices */
+@media (hover: hover) {
+    body, a, button, .project-card, .slider-btn, .modal-close, .modal-btn, .contact-card, .timeline-item, .nav-link {
+        cursor: none;
+    }
+}
+
+@media (hover: none) {
+    .cursor-dot, .cursor-outline {
+        display: none !important;
+    }
+    body, a, button, .project-card, .slider-btn, .modal-close, .modal-btn, .contact-card, .timeline-item, .nav-link {
+        cursor: auto !important;
+    }
 }
 
 ::selection {
@@ -243,6 +271,15 @@ p {
     display: none;
 }
 
+/* Drawer styles hidden by default on desktop */
+.drawer-only {
+    display: none !important;
+}
+
+.nav-num {
+    display: none;
+}
+
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -260,6 +297,25 @@ p {
     border-radius: 3px;
 }
 
+/* Navigation Backdrop Overlay */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 999;
+    animation: navOverlayFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes navOverlayFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 /* Responsive basics */
 @media (max-width: 768px) {
     .menu-toggle {
@@ -270,19 +326,143 @@ p {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 70vw;
+        width: 80vw;
+        max-width: 320px;
         height: 100vh;
-        background: rgba(3, 3, 5, 0.95);
-        backdrop-filter: blur(20px);
+        background: linear-gradient(135deg, rgba(10, 10, 15, 0.85) 0%, rgba(3, 3, 5, 0.95) 100%);
+        backdrop-filter: blur(40px);
+        -webkit-backdrop-filter: blur(40px);
         flex-direction: column;
-        justify-content: center;
-        transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        border-left: 1px solid var(--glass-border);
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 0;
+        transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        border-left: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        padding: 4rem 2rem 2.5rem;
     }
     
     .nav-links.mobile-active {
         right: 0;
+    }
+
+    /* Staggered entrance animations for menu links */
+    .nav-links li {
+        opacity: 0;
+        transform: translateY(25px);
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: calc(var(--item-index) * 0.08s);
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .nav-links.mobile-active li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Premium drawer only elements styling on mobile */
+    .drawer-only {
+        display: flex !important;
+    }
+    
+    .drawer-header {
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    .drawer-logo {
+        font-size: 2.2rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
+    .drawer-logo span {
+        color: var(--accent-blue);
+    }
+    
+    .drawer-footer {
+        flex-direction: column;
+        width: 100%;
+        margin-top: auto;
+        gap: 1rem;
+    }
+    
+    .drawer-divider {
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(90deg, var(--glass-border), transparent);
+        margin-bottom: 0.5rem;
+    }
+    
+    .drawer-socials {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    
+    .drawer-socials a {
+        font-size: 1.3rem;
+        transition: var(--transition-smooth);
+    }
+    
+    .drawer-socials a:hover {
+        transform: translateY(-3px);
+        filter: drop-shadow(0 0 8px var(--accent-blue));
+    }
+    
+    .drawer-copyright {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.3);
+        font-family: var(--font-secondary);
+    }
+    
+    /* Mobile nav link item designs */
+    .nav-num {
+        display: inline-block;
+        font-size: 0.9rem;
+        font-family: var(--font-secondary);
+        color: var(--accent-cyan);
+        font-weight: 600;
+        margin-right: 8px;
+    }
+    
+    .nav-link {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        width: 100%;
+        padding: 0.8rem 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition-smooth);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    }
+    
+    .nav-link::after {
+        display: none; /* Hide standard underline */
+    }
+    
+    .nav-link:hover, .nav-link:active {
+        color: var(--accent-blue);
+        padding-left: 8px;
+    }
+    
+    .nav-links li a.btn-primary {
+        display: inline-flex;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 0.85rem 2rem;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        border-bottom: none;
     }
     
     .menu-toggle.active span:nth-child(1) {

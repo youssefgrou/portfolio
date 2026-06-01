@@ -33,7 +33,7 @@ const CustomCursor = () => {
         // Hover effects setup
         const addHoverEffects = () => {
             const interactiveElements = document.querySelectorAll('a, button, .project-card, .timeline-item');
-            
+
             interactiveElements.forEach((el) => {
                 // Ensure we don't attach multiple listeners by checking a dataset flag
                 if (el.dataset.cursorAttached) return;
@@ -53,7 +53,7 @@ const CustomCursor = () => {
                         }
                     }
                 });
-                
+
                 el.addEventListener('mouseleave', () => {
                     if (cursorOutline) {
                         cursorOutline.style.width = '40px';

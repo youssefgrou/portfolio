@@ -249,15 +249,13 @@
 }
 
 .skill-category {
-    background: transparent;
-    border: none;
-    padding: 1rem 0;
+    transition: var(--transition-smooth);
 }
 
 .skill-category:hover {
-    transform: none;
-    box-shadow: none;
-    border-color: transparent;
+    transform: translateY(-5px);
+    border-color: rgba(0, 240, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 240, 255, 0.1);
 }
 
 .skill-category h3 {
@@ -803,51 +801,129 @@
     }
     
     .hero-name {
-        font-size: 3.5rem;
+        font-size: 3.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 1.5rem;
+        min-height: auto;
+    }
+
+    .hero {
+        padding-top: 15vh;
+        min-height: 90vh;
     }
     
-    .hero-title {
-        font-size: 1.5rem;
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .about-stats {
+        flex-direction: row;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .about-stats .stat {
+        padding: 0.5rem;
+    }
+
+    .stat-num {
+        font-size: 2.8rem;
+    }
+
+    /* Fix outline text stroke on mobile where touch hover is unsupported */
+    .text-stroke {
+        color: var(--accent-blue) !important;
+        -webkit-text-stroke: 0px transparent !important;
+        text-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .glass-panel {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .timeline {
+        padding-left: 2rem;
+    }
+
+    .timeline-item {
+        padding: 1.5rem;
+    }
+
+    .timeline-item::before {
+        left: -2rem;
     }
 }
 
 @media (max-width: 600px) {
     .hero-actions {
         flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+    
+    .hero-actions .btn-primary,
+    .hero-actions .btn-secondary {
+        width: 100%;
+        padding: 0.85rem 2rem;
     }
     
     .hero-name {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+    }
+
+    .hero-greeting {
+        font-size: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .hero-description {
+        margin: 1rem 0 2rem;
+        font-size: 1.1rem;
     }
     
     .modal-content {
-        height: 70vh;
+        height: 85vh;
         width: 95%;
+        padding: 1rem;
     }
     
     .modal-close {
-        top: -35px;
-        right: 5px;
-        font-size: 2rem;
+        top: -45px;
+        right: 0;
+        font-size: 2.5rem;
+    }
+
+    .modal-gallery {
+        height: 55%;
+        min-height: 250px;
     }
     
     .modal-title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        margin-bottom: 5px;
     }
     
     .modal-description {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
     }
-    
-    .stat-num {
-        font-size: 2.5rem;
-    }
-    
-    .timeline {
-        padding-left: 1.5rem;
-    }
-    
-    .timeline-item::before {
-        left: -1.5rem;
+
+    .modal-info {
+        margin-top: 15px;
+        overflow-y: auto;
+        max-height: calc(45% - 25px);
     }
 }
